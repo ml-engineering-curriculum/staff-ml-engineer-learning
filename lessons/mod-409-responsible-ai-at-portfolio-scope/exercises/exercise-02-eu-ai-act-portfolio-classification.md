@@ -1,25 +1,75 @@
-# exercise-02: Eu Ai Act Portfolio Classification
-
-> Scaffolded by `aicg org execute-plan`. The exercise prompt lands here on the next autonomous cycle.
+# exercise-02: EU AI Act Portfolio Classification
 
 **Estimated effort:** 2 hours
 
 ## Objective
 
-TBD.
+Author the **EU AI Act portfolio classification table** for the same three-to-five-system portfolio you registered in exercise-01, using chapter 3's four-tier framework (unacceptable / high-risk / limited-risk / minimal-risk). The deliverable is a one-page-per-portfolio table with an engineering-read tier per system, the obligation-surface subset that flows from the tier, the extraterritorial-reach argument for non-EU-headquartered orgs, and the legal-review escalation status per row. After this exercise the learner should hold the second of the module's five artifacts and the artifact that locks to the register at the row level — a change on either side triggers a review of the other.
+
+Chapter 3 was explicit that this is an *engineering read*, not a legal opinion. The Staff engineer's read is what lets the org plan the compliance work; the binding classification stays with the legal team. Exercise-04's gate reads the register row and this classification row as a single packet for a launching system.
 
 ## Prerequisites
 
-TBD.
+- Exercise-01's register for the same portfolio. The classification table is locked to the register at the row level; the register's row-owners are the classification table's row-owners.
+- Chapter 03 — the four tier definitions, the high-risk obligation surface (risk management, data governance, technical documentation, transparency, human oversight, accuracy / robustness / cybersecurity), the extraterritorial-reach reasoning, and the Staff-owns-engineering-read vs. legal-owns-binding-classification split. Read in full.
+- Regulation (EU) 2024/1689 (the *AI Act*) — at minimum the tier structure (unacceptable / high-risk / limited-risk / minimal-risk) and the Annex enumerating high-risk-use-case categories. Cite the Official Journal text rather than a summary blog for any specific tier claim.
+- European Commission's [AI Act summary page](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — the Commission's plain-language framing of the tier structure and phased application dates. Useful for a first pass; not a substitute for the Official Journal text on any specific claim.
+- Recommended: skim the mod-408 severity vocabulary if you have it (the classification table's "impact on users" reasoning shares vocabulary with the incident-severity criteria) and any legal-team-facing risk-assessment templates your org already uses (so your classification table complements rather than duplicates them).
+
+## Choose the portfolio
+
+Reuse the exercise-01 portfolio. Do not introduce a new portfolio at this exercise — the two artifacts are locked at the row level and reworking the portfolio here forces reworking exercise-01. If your exercise-01 portfolio has fewer than three EU-adjacent systems, that is fine; the classification table will still surface a mix of tiers, and the extraterritorial-reach column exercise remains valuable.
 
 ## Steps
 
-TBD.
+1. **Draft the header block.** One paragraph at the top of the table naming the org's headquartered jurisdiction (this changes the extraterritorial-reach conversation), the assumed enforcement date the table is written against (the phased application dates matter — a table written against the prohibited-practices application date differs from one written against the high-risk-obligation application date), the row-owner (Staff ML engineer — you), the legal-team point of contact who is the escalation destination, and the cadence at which the table is refreshed (quarterly by default, or on any material product change).
+2. **Draft the tier-per-system engineering read.** For each system in the portfolio, name the tier — `unacceptable`, `high-risk`, `limited-risk`, `minimal-risk` — with a one-to-two-sentence engineering rationale. The rationale names the specific tier-driving property: a system that "materially affects access to a financial service for a natural person" tips toward high-risk; a system that "generates AI content presented to users" carries the limited-risk transparency obligation; a system that does neither typically lands minimal-risk. Cite the Annex or Article you are reading against when the tier turns on a specific enumerated category.
+3. **Populate the obligation-surface column for high-risk rows.** For each row landed at high-risk, mark which of the six obligation classes from chapter 3 apply (risk management, data and data governance, technical documentation and record-keeping, transparency and provision of information to users, human oversight, accuracy / robustness / cybersecurity). For each obligation that applies, name the artifact that will satisfy it — the register row (exercise-01), the model card and datasheet (exercise-03), the human-oversight design (exercise-04's conditional artifact), the eval report cited from the model card. Chapter 3 was explicit that the obligation surface is only useful when mapped to artifacts the launch will produce.
+4. **Populate the transparency-obligation column for limited-risk rows.** For each row landed at limited-risk, name the specific transparency notice the user will see — the AI-interaction disclosure on a chatbot, the AI-generated-content mark on synthetic media, the emotion-recognition disclosure. Name where in the product surface the notice lives and who owns the copy. A transparency obligation with no product-surface entry is a defect the launch gate will catch.
+5. **Draft the extraterritorial-reach argument for every row.** One-to-two sentences per row on why the system is in scope or out of scope for the Act — even for rows that land clearly out-of-scope. Chapter 3 was explicit that an unrecorded argument is the shape of a defect the next auditor will find. For rows with any EU user traffic on any surface, default to in-scope; the "material volume" line is legal's to draw. For rows out of scope, name specifically why (internal-only, non-EU-user-only, upstream customer's obligation), and note the assumption that must remain true.
+6. **Set the legal-review status per row.** Four states: `unreviewed`, `in-review`, `legal-confirmed`, `legal-disputed`. Every row has one. A row at `unreviewed` for a system your engineering read classifies as high-risk or unacceptable is a row exercise-04's gate will block on. For any row you are marking `unreviewed` today, name the escalation you are about to file with the legal team and the target date for `in-review`.
+7. **Draft the escalation-to-legal template.** Half a page at the end of the doc: a template for the memo that goes to the legal team when a row's engineering read is contested or unclear. Fields: system name, engineering-read tier, the specific tier-driving property, the alternate tier the engineering-read author is uncertain between, the decision the Staff engineer is requesting from legal (confirm / reclassify / defer with rationale), and the date the launch depends on. Chapter 3 was explicit that the escalation is a documented process, not a hallway conversation.
+8. **Cross-link every row to its exercise-01 register row.** Each classification row names the corresponding register-row identifier; each register row is updated with the tier read from this table. The two artifacts are locked; a change on either side triggers a review of the other. Note in the header block where the lock is enforced (both rows share a `next review by` date, or the analyst's quarterly signoff covers both).
+9. **Score the table against a "legal-team cold read" test.** After drafting, put the doc down for at least half an hour, then re-read as if you were the legal counsel who has never seen the portfolio. For each row ask: can I tell what this system does, what the engineering-read tier is, what the specific tier-driving property is, whether I am being asked to confirm or dispute, and by when? If any row fails the test, revise.
+
+## Deliverable
+
+A single classification-table document, 1-3 pages depending on portfolio size, containing:
+
+- **Section 0 — Header block.** Org jurisdiction, assumed enforcement date, row-owner, legal-team contact, cadence (step 1).
+- **Section 1 — The classification table.** One row per system with columns for tier, engineering rationale, obligation-surface subset (for high-risk rows), transparency-obligation entry (for limited-risk rows), extraterritorial-reach argument, and legal-review status (steps 2-6). Cross-linked to the exercise-01 register row (step 8).
+- **Section 2 — Escalation-to-legal template.** Half-page template for the memo the Staff engineer files when a row's read is contested or unclear (step 7).
+- **Appendix A — Cold-read audit.** The result of step 9 — which rows passed the legal-team cold read and which were revised. Keep it in the doc.
+
+## Starter guidance
+
+- **The engineering read is an engineering read.** Chapter 3 was explicit. Do not phrase any row as though it were a legal opinion (`this system is high-risk under Article X`); phrase it as an engineering-read to be confirmed or disputed by legal (`engineering read: high-risk, on the basis that the system's output materially affects access to a credit product to a natural person; pending legal confirmation`).
+- **Default toward in-scope on extraterritorial reach.** Chapter 3 was explicit that the engineering read errs toward *in-scope* rather than *out-of-scope*. A row marked out-of-scope with a shaky argument is a row that the next auditor will find; a row marked in-scope that legal later re-classifies is a legal-team decision that is documented and defensible.
+- **Prefer the Article / Annex citation over paraphrase for tier-driving properties.** When a row lands high-risk because it operates in a category the Act's Annex III enumerates, cite the Annex III item. When it lands limited-risk because Article 50-adjacent transparency applies, cite the Article. Citations survive the next Act amendment better than paraphrases do.
+- **The obligation-surface column is a *checklist against artifacts*, not a re-statement of the Act.** Chapter 3 was explicit — for each obligation class that applies, name the artifact that satisfies it (register row, model card, datasheet, human-oversight design). If you have obligations with no corresponding artifact, exercise-04's gate charter must list the missing artifact as a conditional requirement.
+- **A row you cannot confidently classify is a row you escalate today.** Chapter 3's escalation is documented, not a favour. If you find yourself writing `possibly high-risk, possibly limited-risk, will decide later`, stop, mark the row `unreviewed — pending legal escalation`, and draft the escalation memo from step 7 for it.
+- **Do not confuse the tier with the risk severity.** A minimal-risk system on the Act's tiering can still be a high-severity mod-408 reliability risk; a limited-risk system can still be a Sev-1-generating fairness risk. The classification table is one dimension; the register (exercise-01) carries the reliability and Manage-column severity separately.
+- **Every out-of-scope row records the assumption that must remain true.** A row that says `out of scope — no EU user traffic` is only valid so long as the system does not launch an EU-user surface. Note the assumption; note who owns re-scoring the row if the assumption breaks.
+- **Do not over-populate the transparency-obligation column on high-risk rows.** Chapter 3 was explicit that high-risk cumulates the transparency-obligation on top, but the transparency notice detail lives in the model card's user-facing summary, not in the classification table. Keep the classification table focused on tier-and-obligation-surface; keep the notice copy in the model card.
 
 ## Acceptance criteria
 
-TBD.
+- The portfolio is the same 3-5 systems from exercise-01; every row is cross-linked to the corresponding register row.
+- The header block names the org's headquartered jurisdiction, the assumed Act application date the table is written against, the legal-team contact for escalation, and the cadence.
+- Every row has a named tier (`unacceptable` / `high-risk` / `limited-risk` / `minimal-risk`) with a one-to-two-sentence engineering rationale that cites the specific tier-driving property (Annex III item, Article, or use-case category).
+- Every high-risk row names which of the six chapter-3 obligation classes apply and, for each, the artifact that will satisfy it.
+- Every limited-risk row names the specific transparency notice the user will see, where in the product surface it lives, and the copy owner.
+- Every row has an extraterritorial-reach argument in one to two sentences — including rows that land out-of-scope.
+- Every row has a legal-review status (`unreviewed` / `in-review` / `legal-confirmed` / `legal-disputed`); any `unreviewed` row for a system whose engineering read is high-risk or unacceptable is paired with a filed escalation and a target `in-review` date.
+- The escalation-to-legal template names the six fields from step 7 (system, engineering-read tier, tier-driving property, alternate tier, requested decision, launch-dependent date).
+- No row phrases the engineering-read tier as a legal opinion; every row is marked as an engineering read pending legal confirmation.
+- The cold-read audit in Appendix A is present and names at least one row that was revised as a result.
 
 ## Stretch goals
 
-TBD.
+- **Populate the escalation-to-legal template for one contested row.** Pick the row whose tier your engineering read is least certain about and draft the actual escalation memo the legal team would receive. This is where the classification table becomes actionable rather than decorative.
+- **Draft the "what changes on tier upgrade" note.** For one row that your engineering read lands at limited-risk but that could plausibly upgrade to high-risk after legal review, draft one paragraph on which artifacts, signoffs, and controls would need to change if legal reclassifies it up. This is a rehearsal for exercise-04's proportionality rule.
+- **Compare against a published EU AI Act tier-assessment worked example.** Pick one published example (from EDPB, ENISA, a national supervisory authority, or a compliance-vendor blog post) and note where the vocabulary of your table matches and where it diverges. External anchors are what turn the table from an internal document into a defensible one.
+- **Draft the classification-refresh trigger set.** In an appendix, name the specific product events that trigger a row refresh outside the quarterly cadence — a new deployment region, a new input modality, a change in the user population, a shift in the automation level of the decision. The trigger set is what keeps the table from going stale between quarterly reviews.
+- **Take the draft to a peer for adversarial pre-review.** A Staff-plus peer, and ideally someone with legal-adjacent training. Ask them to identify the row where they would most likely dispute your engineering read and why. Absorb the pushback and update the row's rationale. This is a rehearsal for the legal team's first review meeting.
+- **Draft the exec one-liner.** One sentence at the top of the doc: what the table asserts, what it defers to legal, and what proportion of the portfolio lands where. "The engineering-read classification of the five-system portfolio: one high-risk, two limited-risk, two minimal-risk, all pending quarterly legal confirmation; the high-risk row is the fraud-scoring system on the basis of Annex III access-to-financial-services." That sentence is what the head of AI governance and the head of product read.

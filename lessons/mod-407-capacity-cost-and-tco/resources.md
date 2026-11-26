@@ -19,7 +19,7 @@ Real, citable references for the topics this module covers. Read the FinOps cano
 - **Microsoft Azure.** [Azure Spot Virtual Machines documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/spot-vms). The Azure spot model.
 - **Cloud provider TCO calculators.** [AWS Pricing Calculator](https://calculator.aws/), [Google Cloud Pricing Calculator](https://cloud.google.com/products/calculator), [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/). Read the docs behind the calculators (assumptions, storage-tier defaults) rather than trusting the calculator output blindly.
 
-<!-- needs-research: verify each committed-use programme's current discount ranges before authoring a TCO model; the numbers move every year and vendor documentation is authoritative over any second-hand summary. -->
+Verify each committed-use programme's current discount ranges against the vendor documentation linked above before authoring a TCO model; the numbers move every year and vendor documentation is authoritative over any second-hand summary.
 
 ## GPU hardware and benchmarks
 
@@ -53,10 +53,10 @@ Real, citable references for the topics this module covers. Read the FinOps cano
 ## Company writeups on ML fleet economics
 
 - **Meta.** *Applied Machine Learning at Facebook: A Datacenter Infrastructure Perspective.* HPCA 2018. [Paper page](https://research.facebook.com/publications/applied-machine-learning-at-facebook-a-datacenter-infrastructure-perspective/). Portfolio-scope ML from a hyperscaler perspective; the numbers are dated but the *shape* of the fleet-economics story is a template for chapter 6's TCO one-pager.
-- **Meta AI.** [Building Meta's GenAI Infrastructure](https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/). Meta's 2024 writeup on the 24k-H100 clusters supporting Llama 3 training; useful for grounding chapter 3's self-hosted-at-scale claims. <!-- needs-research: verify URL and citation stability. -->
+- **Meta AI.** [Building Meta's GenAI Infrastructure](https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/). Meta's March 2024 writeup on the two 24,576-H100 clusters supporting Llama 3 training; useful for grounding chapter 3's self-hosted-at-scale claims.
 - **Google.** [Google Cloud AI Infrastructure blog posts](https://cloud.google.com/blog/products/ai-machine-learning). Google's public writeups on TPU and GPU fleet economics; useful for triangulating the cross-cloud story.
-- **Microsoft.** [Microsoft AI supercomputing and infrastructure posts](https://blogs.microsoft.com/blog/tag/ai/). Microsoft / OpenAI supercomputing writeups; grounding for the "very large scale, mixed CPU/GPU / accelerator" fleet-economics conversation. <!-- needs-research: identify a specific canonical Microsoft post that matches the mod's altitude and cite it directly. -->
-- **CoreWeave / Lambda / neocloud provider blogs.** The neocloud providers publish cost-per-hour rate cards and (occasionally) TCO comparisons vs. hyperscalers. Useful for the chapter 3 self-hosted-vs-neocloud-vs-hyperscaler math. <!-- needs-research: cite one or two specific neocloud posts with defensible cost-per-hour numbers that the module can quote. -->
+- **Microsoft.** [Microsoft adopts NVIDIA Blackwell to power the next frontier of AI supercomputing](https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/microsoft-adopts-nvidia-blackwell-to-power-the-next-frontier-of-ai-supercomputin/4303541) (Azure HPC blog, November 2024). Microsoft's canonical Azure-side writeup on the NDv6 GB200 V6 VM series and the NVLink-domain / InfiniBand topology behind Azure's current frontier-training infrastructure; grounding for the "very large scale, mixed CPU/GPU accelerator" fleet-economics conversation.
+- **CoreWeave / Lambda neocloud pricing pages.** [CoreWeave pricing](https://www.coreweave.com/pricing) (per-node and per-GPU on-demand, spot, and committed rates for HGX H100, H200, and B200) and [Lambda GPU Cloud pricing](https://lambda.com/service/gpu-cloud) (per-GPU-hour rates for H100 and B200). The neocloud providers publish cost-per-hour rate cards and (occasionally) TCO comparisons vs. hyperscalers; these pages are the primary-source numbers chapter 3's self-hosted-vs-neocloud-vs-hyperscaler math quotes.
 
 ## Engineering practice texts adjacent to this module
 
@@ -77,4 +77,7 @@ Real, citable references for the topics this module covers. Read the FinOps cano
 - [`../mod-410-staff-plus-technical-leadership/`](../mod-410-staff-plus-technical-leadership/) — the exec-communication track that workshops chapter 6's one-pager.
 - [`../../projects/project-401-multi-team-ml-blueprint/`](../../projects/project-401-multi-team-ml-blueprint/) — the capstone project that pairs the mod-402 portfolio blueprint with this module's TCO model.
 
-<!-- needs-research: add one or two published ML-org TCO writeups (public write-ups of a workload-migration or reserved-commit decision that landed at portfolio scope) once the autonomous research loop has WebSearch permissions. Candidates to check first: Shopify, Stripe, Cloudflare, DoorDash, Instacart engineering blogs; also NVIDIA / Databricks / Anyscale customer case studies. -->
+## Workload-migration writeups from production ML orgs
+
+- **Shopify.** [How Shopify turns open models into task experts](https://shopify.engineering/open-model-task-experts) (Shopify Engineering, October 2026). A workload-migration writeup of exactly the chapter 4 type: Shopify migrated a token-heavy GraphQL subagent off the frontier hosted-API and onto a post-trained open-weights model (NVIDIA Nemotron 3.5 Lightning) served on their own GPUs, with 7× latency and ~90% cost-to-serve improvements. The most concrete published example of the managed-API ↔ self-hosted call the module teaches.
+- **Cloudflare.** [How we built the most efficient inference engine for Cloudflare's network](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine). Cloudflare's post on *Infire*, their Rust-based LLM inference engine; useful as a public example of the throughput-and-utilisation discipline that chapter 4's diagnostic measures workloads against.
